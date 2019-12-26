@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@neo-one/cli": "^2.4.0",
+    "@neo-one/client": "^2.3.0",
+    "@neo-one/smart-contract-typescript-plugin": "^2.3.0",
+    "@neo-one/suite": "^2.3.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
     "@testing-library/user-event": "^7.2.1",
