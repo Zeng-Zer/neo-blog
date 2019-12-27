@@ -1,20 +1,47 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { ContractsProvider, createClient } from './neo-one';
+import { ContractsProvider, WithContracts, createClient } from './neo-one';
 import './index.css';
-import App from './App';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import App from './components/App';
 import * as serviceWorker from './serviceWorker';
+import { AddressString } from '@neo-one/client';
 
 const client = createClient();
 
-const app = (
-    <ContractsProvider client={client}>
-        <App />
-    </ContractsProvider>
-);
+type RootState = {
+  clientAccount: AddressString | undefined
+}
+
+class Root extends Component<any, RootState> {
+  readonly state = {
+    clientAccount: undefined
+  }
+
+  componentDidMount() {
+    const comp = this;
+    client.currentUserAccount$.subscribe({
+      next(account) {
+        comp.setState({ clientAccount: account?.id.address });
+      }
+    });
+  }
+
+  render() {
+    return (
+      <ContractsProvider client={client}>
+        <WithContracts>
+          {({ blog }) =>
+            <App blog={blog} account={this.state.clientAccount} />
+          }
+        </WithContracts>
+      </ContractsProvider>
+    );
+  }
+}
 
 ReactDOM.render(
-    app, document.getElementById('root')
+  <Root />, document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change
