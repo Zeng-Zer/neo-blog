@@ -31,8 +31,12 @@ class Root extends Component<any, RootState> {
     return (
       <ContractsProvider client={client}>
         <WithContracts>
-          {({ blog }) =>
-            <App blog={blog} account={this.state.clientAccount} />
+          {({ token, blog }) =>
+            <App
+              token={token}
+              blog={blog}
+              account={this.state.clientAccount}
+            />
           }
         </WithContracts>
       </ContractsProvider>
